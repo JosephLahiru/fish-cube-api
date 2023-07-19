@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import requests
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, make_response
 from keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
@@ -9,6 +9,13 @@ app = Flask(__name__)
 
 model_vgg16 = load_model('models/detecting_freshness_of_fish_cube_VGG16.h5')
 classes = ['Healthy', 'Unhealthy']
+
+
+def add_headers(output):
+    response = make_response(jsonify(output))
+    response.headers.add('Access-Control-Allow-Origin', '*')
+
+    return response
 
 
 def download_image(url, save_path):
@@ -34,10 +41,10 @@ def predict():
         result_vgg16 = model_vgg16.predict(img_data)
         class_result = np.argmax(result_vgg16, axis=1)
         prediction = classes[class_result[0]]
-        os.remove(img_path)  # Remove the temporary image file
-        return jsonify({'prediction': prediction})
+        os.remove(img_path)
+        return add_headers({'prediction': prediction})
     except Exception as e:
-        return jsonify({'error': str(e)})
+        return add_headers({'error': str(e)})
 
 
 if __name__ == '__main__':
