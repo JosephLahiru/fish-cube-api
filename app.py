@@ -1,7 +1,7 @@
 import os
 import numpy as np
 import requests
-from flask import Flask, request, jsonify, make_response
+from flask import Flask, request, jsonify, make_response, render_template
 from keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
@@ -29,6 +29,11 @@ def prepare(img_path):
     x = image.img_to_array(img)
     x = x / 255
     return np.expand_dims(x, axis=0)
+
+
+@app.route('/')
+def index():
+    return render_template("index.html")
 
 
 @app.route('/predict', methods=['POST'])
