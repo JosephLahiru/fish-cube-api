@@ -10,16 +10,19 @@ app = Flask(__name__)
 model_vgg16 = load_model('models/detecting_freshness_of_fish_cube_VGG16.h5')
 classes = ['Healthy', 'Unhealthy']
 
+
 def download_image(url, save_path):
     with open(save_path, "wb") as f:
         response = requests.get(url)
         f.write(response.content)
+
 
 def prepare(img_path):
     img = image.load_img(img_path, target_size=(224, 224))
     x = image.img_to_array(img)
     x = x / 255
     return np.expand_dims(x, axis=0)
+
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -36,6 +39,7 @@ def predict():
     except Exception as e:
         return jsonify({'error': str(e)})
 
+
 if __name__ == '__main__':
     from waitress import serve
-    serve(app, host='0.0.0.0', port=5000)
+    serve(app, host='0.0.0.0', port=5000, threads=5)
