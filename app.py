@@ -1,4 +1,4 @@
-import os
+import os, sys
 import numpy as np
 import requests
 from flask import Flask, request, jsonify, make_response, render_template
@@ -9,14 +9,14 @@ app = Flask(__name__)
 
 try:
     fish_type_model = load_model(
-        'models/detecting_freshness_of_fish_cube_VGG16.h5')
+        'models/fish_type_model.h5')
     healty_unhealthy_yellowfin_model = load_model(
-        'models/detecting_freshness_of_fish_cube_VGG16.h5')
+        'models/yellowfin_model.h5')
     healty_unhealthy_skipjack_model = load_model(
-        'models/detecting_freshness_of_fish_cube_VGG16.h5')
+        'models/skipjack_model.h5')
 except Exception as e:
     print(e)
-    exit(0)
+    sys.exit(0)
 
 fish_type_classes = ['Yellofin_tuna', 'Skipjack_tuna', "Invalid_image"]
 healty_unhealthy_classes = ['Healthy', 'Unhealthy']
