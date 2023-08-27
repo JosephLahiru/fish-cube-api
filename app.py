@@ -79,7 +79,7 @@ def predict():
     try:
         fish_type_data = detect_fish_type(request.json['img_url'])
 
-        if (fish_type_data == fish_type_classes[2]):
+        if (fish_type_data[0] == fish_type_classes[2]):
             return add_headers({'error': fish_type_data[0]})
         else:
             try:
