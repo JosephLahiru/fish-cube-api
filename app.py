@@ -8,9 +8,12 @@ from tensorflow.keras.preprocessing import image
 app = Flask(__name__)
 
 try:
-    fish_type_model = load_model('models/detecting_freshness_of_fish_cube_VGG16.h5')
-    healty_unhealthy_yellowfin_model = load_model('models/detecting_freshness_of_fish_cube_VGG16.h5')
-    healty_unhealthy_skipjack_model = load_model('models/detecting_freshness_of_fish_cube_VGG16.h5')
+    fish_type_model = load_model(
+        'models/detecting_freshness_of_fish_cube_VGG16.h5')
+    healty_unhealthy_yellowfin_model = load_model(
+        'models/detecting_freshness_of_fish_cube_VGG16.h5')
+    healty_unhealthy_skipjack_model = load_model(
+        'models/detecting_freshness_of_fish_cube_VGG16.h5')
 except Exception as e:
     print(e)
     exit(0)
@@ -19,6 +22,7 @@ fish_type_classes = ['Yellofin_tuna', 'Skipjack_tuna', "Invalid_image"]
 healty_unhealthy_classes = ['Healthy', 'Unhealthy']
 
 img_path = 'temp/temp_image.jpg'
+
 
 def add_headers(output):
     response = make_response(jsonify(output))
@@ -41,7 +45,7 @@ def prepare(img_path):
 
 
 def detect_fish_type(img_url):
-    
+
     download_image(img_url, img_path)
     img_data = prepare(img_path)
     result_vgg16 = fish_type_model.predict(img_data)
@@ -54,8 +58,8 @@ def detect_fish_type(img_url):
 def detect_healty_unhealthy(fish_type, img_data):
 
     model = healty_unhealthy_skipjack_model
-    if(fish_type==fish_type_classes[0]):
-        #select the yellofin model
+    if (fish_type == fish_type_classes[0]):
+        # select the yellofin model
         model = healty_unhealthy_yellowfin_model
 
     result_vgg16 = model.predict(img_data)
@@ -75,17 +79,19 @@ def predict():
     try:
         fish_type_data = detect_fish_type(request.json['img_url'])
 
-        if(fish_type==fish_type_classes[2]):
+        if (fish_type == fish_type_classes[2]):
             return add_headers({'error': fish_type})
         else:
             try:
-                prediction = detect_healty_unhealthy(fish_type_data[0], fish_type_data[1])
+                prediction = detect_healty_unhealthy(
+                    fish_type_data[0], fish_type_data[1])
                 os.remove(img_path)
                 return add_headers({'prediction': prediction})
             except Exception as e:
                 return add_headers({'error': str(e)})
     except Exception as e:
         return add_headers({'error': str(e)})
+
 
 if __name__ == '__main__':
     from waitress import serve
