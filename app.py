@@ -52,7 +52,7 @@ def detect_fish_type(img_url):
     class_result = np.argmax(result_vgg16, axis=1)
     prediction = fish_type_classes[class_result[0]]
 
-    return [prediction, imge_data]
+    return [prediction, img_data]
 
 
 def detect_healty_unhealthy(fish_type, img_data):
@@ -79,18 +79,18 @@ def predict():
     try:
         fish_type_data = detect_fish_type(request.json['img_url'])
 
-        if (fish_type == fish_type_classes[2]):
-            return add_headers({'error': fish_type})
+        if (fish_type_data == fish_type_classes[2]):
+            return add_headers({'error': fish_type_data[0]})
         else:
             try:
                 prediction = detect_healty_unhealthy(
                     fish_type_data[0], fish_type_data[1])
                 os.remove(img_path)
                 return add_headers({'prediction': prediction})
-            except Exception as e:
-                return add_headers({'error': str(e)})
-    except Exception as e:
-        return add_headers({'error': str(e)})
+            except Exception as _e:
+                return add_headers({'error': str(_e)})
+    except Exception as _e:
+        return add_headers({'error': str(_e)})
 
 
 if __name__ == '__main__':
