@@ -1,6 +1,6 @@
 # Fish Cube API
 
-- ### Run `./download_models.sh` to download the reuqired 3 models.
+- ### Run `chmod +x download_models.sh && ./download_models.sh` to download the reuqired 3 models.
 
 - ### Run `pip install -r requirements.txt` to install the requirements.
 
