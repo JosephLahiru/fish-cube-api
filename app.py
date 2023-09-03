@@ -1,4 +1,5 @@
-import os, sys
+import os
+import sys
 import numpy as np
 import requests
 from flask import Flask, request, jsonify, make_response, render_template
@@ -21,7 +22,7 @@ except Exception as e:
 fish_type_classes = ['Yellofin_tuna', 'Skipjack_tuna', "Invalid_image"]
 healty_unhealthy_classes = ['Healthy', 'Unhealthy']
 
-img_path = 'temp/temp_image.jpg'
+img_path = 'temp_image.jpg'
 
 
 def add_headers(output):
