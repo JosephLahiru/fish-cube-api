@@ -1,4 +1,4 @@
-FROM python:3.10.0-alpine
+FROM python:3.10.0
 RUN pip install --upgrade pip
 WORKDIR /fish-cube-api
 ADD . /fish-cube-api/
