@@ -67,7 +67,7 @@ def detect_healty_unhealthy(fish_type, img_data):
     class_result = np.argmax(result_vgg16, axis=1)
     prediction = healty_unhealthy_classes[class_result[0]]
 
-    return prediction
+    return [prediction, fish_type]
 
 
 @app.route('/')
@@ -87,7 +87,7 @@ def predict():
                 prediction = detect_healty_unhealthy(
                     fish_type_data[0], fish_type_data[1])
                 os.remove(img_path)
-                return add_headers({'prediction': prediction})
+                return add_headers({'prediction': prediction[0], 'fish_type': prediction[1]})
             except Exception as _e:
                 return add_headers({'error': str(_e)})
     except Exception as _e:
