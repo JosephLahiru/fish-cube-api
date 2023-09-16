@@ -93,7 +93,7 @@ def predict():
         fish_type_data = detect_fish_type(request.json['img_url'])
 
         if (fish_type_data[0] == fish_type_classes[2]):
-            return add_headers({'prediction_type_error': fish_type_data[0]})
+            return add_headers({'prediction': "n/a", 'fish_type': "unknown"})
         else:
             try:
                 prediction = detect_healty_unhealthy(
