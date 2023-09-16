@@ -1,11 +1,10 @@
 # Fish Cube API
 
-- ### Run `chmod +x download_models.sh && ./download_models.sh` to download the reuqired 3 models.
-
 - ### Run `pip install -r requirements.txt` to install the requirements.
 
 - ### Tested, working as expected.
 
-![image](https://github.com/JosephLahiru/fish-cube-api/assets/44818405/ff239d77-ab2c-4506-b8ba-b1d49fa386dc)
+![image](https://github.com/JosephLahiru/fish-cube-api/assets/44818405/d07d7e24-617b-4e65-935f-810da6c0f9d9)
+
 
 - ### Start the Flask server by simply running `python app.py`

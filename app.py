@@ -6,6 +6,13 @@ from flask import Flask, request, jsonify, make_response, render_template
 from keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
+try:
+    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O models/')
+    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O models/')
+    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=1lmefcl-dvP9gwqwFUulZwp3_WuA_dgac -O models/')
+except Exception as e:
+    print(e)
+
 app = Flask(__name__)
 
 try:
