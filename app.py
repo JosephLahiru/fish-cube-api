@@ -6,13 +6,6 @@ from flask import Flask, request, jsonify, make_response, render_template
 from keras.models import load_model
 from tensorflow.keras.preprocessing import image
 
-try:
-    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O models/')
-    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O models/')
-    os.system('python3 -m gdown.cli https://drive.google.com/uc?id=1lmefcl-dvP9gwqwFUulZwp3_WuA_dgac -O models/')
-except Exception as e:
-    print(e)
-
 app = Flask(__name__)
 
 try:
@@ -88,7 +81,7 @@ def predict():
         fish_type_data = detect_fish_type(request.json['img_url'])
 
         if (fish_type_data[0] == fish_type_classes[2]):
-            return add_headers({'error': fish_type_data[0]})
+            return add_headers({'prediction_type_error': fish_type_data[0]})
         else:
             try:
                 prediction = detect_healty_unhealthy(
@@ -96,7 +89,7 @@ def predict():
                 os.remove(img_path)
                 return add_headers({'prediction': prediction[0], 'fish_type': prediction[1]})
             except Exception as _e:
-                return add_headers({'error': str(_e)})
+                return add_headers({'prediction_error': str(_e)})
     except Exception as _e:
         return add_headers({'error': str(_e)})
 
