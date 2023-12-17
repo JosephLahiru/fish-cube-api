@@ -14,7 +14,7 @@ try:
     os.system(
         'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O models/')
     os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=1lmefcl-dvP9gwqwFUulZwp3_WuA_dgac -O models/')
+        'python3 -m gdown.cli https://drive.google.com/uc?id=12IjzLh83ikV8Km0A1nZbhIhnnfQgkv4f -O models/')
 except Exception as e:
     print(e)
 
@@ -62,6 +62,7 @@ def detect_fish_type(img_url):
     download_image(img_url, img_path)
     img_data = prepare(img_path)
     result_vgg16 = fish_type_model.predict(img_data)
+    print(result_vgg16)
     class_result = np.argmax(result_vgg16, axis=1)
     prediction = fish_type_classes[class_result[0]]
 
