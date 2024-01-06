@@ -14,7 +14,7 @@ try:
     os.system(
         'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
     os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=12IjzLh83ikV8Km0A1nZbhIhnnfQgkv4f -O modelss/')
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
 except Exception as e:
     print(e)
 
