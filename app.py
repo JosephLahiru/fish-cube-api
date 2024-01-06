@@ -10,11 +10,11 @@ from tensorflow.keras.preprocessing import image
 
 try:
     os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O models/')
+        'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O modelss/')
     os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O models/')
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
     os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=1lmefcl-dvP9gwqwFUulZwp3_WuA_dgac -O models/')
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
 except Exception as e:
     print(e)
 
@@ -22,11 +22,11 @@ app = Flask(__name__)
 
 try:
     fish_type_model = load_model(
-        'models/fish_type_model.h5')
+        'modelss/fish_type_model.h5')
     healty_unhealthy_yellowfin_model = load_model(
-        'models/yellowfin_model.h5')
+        'modelss/yellowfin_model.h5')
     healty_unhealthy_skipjack_model = load_model(
-        'models/skipjack_model.h5')
+        'modelss/skipjack_model.h5')
 except Exception as e:
     print(e)
     sys.exit(0)
@@ -62,6 +62,7 @@ def detect_fish_type(img_url):
     download_image(img_url, img_path)
     img_data = prepare(img_path)
     result_vgg16 = fish_type_model.predict(img_data)
+    print(result_vgg16)
     class_result = np.argmax(result_vgg16, axis=1)
     prediction = fish_type_classes[class_result[0]]
 

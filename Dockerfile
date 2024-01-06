@@ -1,4 +1,5 @@
 FROM python:3.10.0
+RUN apt-get update && apt-get install -y libgl1-mesa-glx
 RUN pip install --upgrade pip
 WORKDIR /fish-cube-api
 ADD . /fish-cube-api/
