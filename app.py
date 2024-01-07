@@ -9,15 +9,17 @@ from keras.models import load_model
 from tensorflow.keras.preprocessing import image
 from detect import run
 
-# try:
-#     os.system(
-#         'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O modelss/')
-#     os.system(
-#         'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
-#     os.system(
-#         'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
-# except Exception as e:
-#     print(e)
+try:
+    os.system(
+        'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O modelss/')
+    os.system(
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
+    os.system(
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
+    os.system(
+        'python3 -m gdown.cli https://drive.google.com/uc?id=1gebelUX4l-_Y0mf26Sfnc57870E-_axJ -O modelss/')
+except Exception as e:
+    print(e)
 
 app = Flask(__name__)
 
