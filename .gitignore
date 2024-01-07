@@ -1,3 +1,4 @@
 .vscode/
 modelss/*.h5
 */__pycache__/
+modelss/*.pt
