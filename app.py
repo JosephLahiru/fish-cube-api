@@ -7,16 +7,17 @@ import requests
 from flask import Flask, request, jsonify, make_response, render_template
 from keras.models import load_model
 from tensorflow.keras.preprocessing import image
+from detect import run
 
-try:
-    os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O modelss/')
-    os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
-    os.system(
-        'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
-except Exception as e:
-    print(e)
+# try:
+#     os.system(
+#         'python3 -m gdown.cli https://drive.google.com/uc?id=140nWkufV4fjzb18Bs910KQldIcUeVwMc -O modelss/')
+#     os.system(
+#         'python3 -m gdown.cli https://drive.google.com/uc?id=1XP-jlvvDaFwaRDNIuJGF1ZzieSoNHzp_ -O modelss/')
+#     os.system(
+#         'python3 -m gdown.cli https://drive.google.com/uc?id=1hTbFKPYOlSa13ew-hvxjVoXLbLqsbuYD -O modelss/')
+# except Exception as e:
+#     print(e)
 
 app = Flask(__name__)
 
@@ -34,7 +35,7 @@ except Exception as e:
 fish_type_classes = ['Yellofin_tuna', 'Skipjack_tuna', "Invalid_image"]
 healty_unhealthy_classes = ['Healthy', 'Unhealthy']
 
-img_path = 'temp_image.jpg'
+img_path = 'test_images/temp_image.jpg'
 
 
 def add_headers(output):
@@ -60,13 +61,18 @@ def prepare(img_path):
 def detect_fish_type(img_url):
 
     download_image(img_url, img_path)
-    img_data = prepare(img_path)
-    result_vgg16 = fish_type_model.predict(img_data)
-    print(result_vgg16)
-    class_result = np.argmax(result_vgg16, axis=1)
-    prediction = fish_type_classes[class_result[0]]
+    results = run(weights='modelss/best_11.pt', source=img_path)
+    if(len(results)>0 and float(results[0][1])>0.9):
+        img_data = prepare(img_path)
+        result_vgg16 = fish_type_model.predict(img_data)
+        print(result_vgg16)
+        class_result = np.argmax(result_vgg16, axis=1)
+        prediction = fish_type_classes[class_result[0]]
 
-    return [prediction, img_data]
+        return [prediction, img_data]
+    else:
+        os.remove(img_path)
+        return([fish_type_classes[2],"n/a"])
 
 
 def detect_healty_unhealthy(fish_type, img_data):
@@ -91,6 +97,7 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     try:
+
         fish_type_data = detect_fish_type(request.json['img_url'])
 
         if (fish_type_data[0] == fish_type_classes[2]):
