@@ -1,3 +1,3 @@
 from detect import run
-results = run(weights='modelss/best.pt', source='test_images/test1.jpg')
-print(results)
+results = run(weights='modelss/best_11.pt', source='/workspaces/fish-cube-api/temp_image.jpg')
+print(results[0][1])
